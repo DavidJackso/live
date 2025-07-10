@@ -27,7 +27,6 @@ func NewService(repository *repository.Repository) *Service {
 }
 
 func (s *Service) AddComment(comment models.Comment) (models.Comment, error) {
-	comment.Status = "На модерации"
 	comment, err := s.repository.CreateNewComment(comment)
 	if err != nil {
 		return models.Comment{}, err
