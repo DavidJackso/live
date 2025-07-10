@@ -28,5 +28,16 @@ func (r *Repository) CreateNewComment(comment models.Comment) (models.Comment, e
 }
 
 func (r *Repository) UpdateCommentStatus(id uint) error {
+	var comment models.Comment
+	result := r.db.Where("id = ?", id).First(&comment)
+
+	if result.Error != nil {
+		return result.Error
+	}
+	if err := r.db.Save(&comment).Error; err != nil {
+		return fmt.Errorf("не удалось обновить статус: %w", err)
+	}
+
 	return nil
+
 }
