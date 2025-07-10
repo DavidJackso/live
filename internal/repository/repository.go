@@ -35,7 +35,7 @@ func (r *Repository) UpdateCommentStatus(id uint) error {
 		return result.Error
 	}
 	if err := r.db.Save(&comment).Error; err != nil {
-		return fmt.Errorf("не удалось обновить статус: %w", err)
+		return fmt.Errorf("failed update comment status: %w", err)
 	}
 
 	return nil
