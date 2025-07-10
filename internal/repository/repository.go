@@ -34,10 +34,10 @@ func (r *Repository) UpdateCommentStatus(id uint) error {
 	if result.Error != nil {
 		return result.Error
 	}
+	comment.Status = "moderated"
 	if err := r.db.Save(&comment).Error; err != nil {
 		return fmt.Errorf("failed update comment status: %w", err)
 	}
 
 	return nil
-
 }

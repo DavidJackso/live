@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"live/internal/config"
 	"live/internal/repository"
@@ -17,16 +18,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Тестовое задание:
-//     Создать проект с нуля и подключить к БД
-//     Написать ендпоинт для создания отзыва
-//     Отзыв должен создаваться со статсом on_moderation (На модерации)
-//     На фоне должна работать очередь задач (Worker queue), которая будет выставлять отзыву статус moderated (Модерация пройдена)
-
-//     В ответе на создание нужно возвращать созданный отзыв.
-
-//     PS: Можно гуглить.
-
 func main() {
 	InitLogger()
 	cfg, err := config.InitializationConfig()
@@ -40,6 +31,12 @@ func main() {
 	}
 
 	db.AutoMigrate(&models.Comment{})
+
+	var comments []models.Comment
+
+	db.Find(&comments)
+
+	fmt.Print(comments)
 
 	rep := repository.NewRepository(db)
 	service := service.NewService(rep)
