@@ -38,7 +38,7 @@ func (h *Handler) AddComment(c *gin.Context) {
 		return
 	}
 	comment.Status = "on moderated"
-	err = h.service.AddComment(comment)
+	comment, err = h.service.AddComment(comment)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "add comment failed"})
 		return

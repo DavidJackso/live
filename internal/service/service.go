@@ -26,11 +26,11 @@ func NewService(repository *repository.Repository) *Service {
 	return service
 }
 
-func (s *Service) AddComment(comment models.Comment) error {
+func (s *Service) AddComment(comment models.Comment) (models.Comment, error) {
 	comment.Status = "На модерации"
-	_, err := s.repository.CreateNewComment(comment)
+	comment, err := s.repository.CreateNewComment(comment)
 	if err != nil {
-		return err
+		return models.Comment{}, err
 	}
 
 	select {
@@ -38,10 +38,10 @@ func (s *Service) AddComment(comment models.Comment) error {
 		logrus.Info("Comment added to queue: ", comment.ID)
 	default:
 		logrus.Error("queue full")
-		return fmt.Errorf("queue full")
+		return models.Comment{}, fmt.Errorf("queue full")
 	}
 
-	return nil
+	return comment, nil
 }
 
 func (s *Service) worker(id int) {
