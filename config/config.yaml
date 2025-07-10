@@ -1,0 +1,11 @@
+http_server:
+  address: "localhost:8081"
+  read_t: "5s"
+  write_t: "10s"
+
+db:
+  address: "localhost"
+  port: 5433
+  user: "postgres"
+  password: "12332187"
+  name: "postgres"
