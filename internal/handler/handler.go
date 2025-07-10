@@ -37,7 +37,6 @@ func (h *Handler) AddComment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "failed parse request body"})
 		return
 	}
-	comment.Status = "on moderated"
 	comment, err = h.service.AddComment(comment)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "add comment failed"})
